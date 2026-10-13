@@ -3,8 +3,13 @@ import networkx as nx
 # Check readme.md for details on each sub-task
 
 def calculate_node_degrees(edges: list) -> dict:
-    """Sub-task 1: Calculate the degree of each node in an undirected graph."""
-    pass
+    if not edges:
+        return {}
+
+    G = nx.Graph()
+    G.add_edges_from(edges)
+
+    return dict(G.degree())
 
 def find_shortest_path(edges: list, source: str, target: str) -> list:
     """Sub-task 2: Find the shortest path between source and target nodes."""
