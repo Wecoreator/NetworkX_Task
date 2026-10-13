@@ -26,7 +26,10 @@ def count_connected_components(edges: list) -> int:
 
 def compute_topological_sort(directed_edges: list) -> list:
     """Sub-task 4: Compute a topological ordering of nodes in a DAG."""
-    pass
+    graph = nx.DiGraph()
+    graph.add_edges_from(directed_edges)
+
+    return list(nx.topological_sort(graph))
 
 def compute_average_clustering(edges: list) -> float:
     """Sub-task 5: Compute the average clustering coefficient of an undirected graph."""

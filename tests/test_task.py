@@ -102,3 +102,63 @@ def test_connected_components_treats_edges_as_undirected():
     ]
 
     assert count_connected_components(edges) == 2
+
+from task import compute_topological_sort
+
+
+def test_topological_sort_simple_chain():
+    directed_edges = [
+        ("A", "B"),
+        ("B", "C"),
+    ]
+
+    assert compute_topological_sort(directed_edges) == ["A", "B", "C"]
+
+
+def test_topological_sort_multiple_dependencies():
+    directed_edges = [
+        ("Task1", "Task3"),
+        ("Task2", "Task3"),
+        ("Task3", "Task4"),
+    ]
+
+    result = compute_topological_sort(directed_edges)
+
+    assert set(result) == {"Task1", "Task2", "Task3", "Task4"}
+    assert result.index("Task1") < result.index("Task3")
+    assert result.index("Task2") < result.index("Task3")
+    assert result.index("Task3") < result.index("Task4")
+
+
+def test_topological_sort_compile_workflow():
+    directed_edges = [
+        ("compile", "test"),
+        ("test", "deploy"),
+    ]
+
+    assert compute_topological_sort(directed_edges) == [
+        "compile",
+        "test",
+        "deploy",
+    ]
+
+
+def test_topological_sort_empty_edges():
+    assert compute_topological_sort([]) == []
+
+
+def test_topological_sort_respects_all_dependencies():
+    directed_edges = [
+        ("A", "C"),
+        ("B", "C"),
+        ("C", "D"),
+        ("B", "E"),
+    ]
+
+    result = compute_topological_sort(directed_edges)
+
+    assert set(result) == {"A", "B", "C", "D", "E"}
+    assert result.index("A") < result.index("C")
+    assert result.index("B") < result.index("C")
+    assert result.index("C") < result.index("D")
+    assert result.index("B") < result.index("E")
