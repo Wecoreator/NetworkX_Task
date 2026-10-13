@@ -58,3 +58,47 @@ def test_linear_path():
     assert find_shortest_path(edges, "X", "Z") == [
         "X", "Y", "Z"
     ]
+
+
+def test_connected_components_two_groups():
+    edges = [
+        ("A", "B"),
+        ("B", "C"),
+        ("D", "E"),
+    ]
+
+    assert count_connected_components(edges) == 2
+
+
+def test_connected_components_single_group():
+    edges = [
+        ("A", "B"),
+        ("B", "C"),
+        ("C", "A"),
+    ]
+
+    assert count_connected_components(edges) == 1
+
+
+def test_connected_components_three_groups():
+    edges = [
+        ("A", "B"),
+        ("C", "D"),
+        ("E", "F"),
+    ]
+
+    assert count_connected_components(edges) == 3
+
+
+def test_connected_components_empty_edges():
+    assert count_connected_components([]) == 0
+
+
+def test_connected_components_treats_edges_as_undirected():
+    edges = [
+        ("B", "A"),
+        ("B", "C"),
+        ("E", "D"),
+    ]
+
+    assert count_connected_components(edges) == 2
