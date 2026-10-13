@@ -1,4 +1,5 @@
 from task import *
+import pytest
 
 
 def test_node_degrees_example():
@@ -162,3 +163,45 @@ def test_topological_sort_respects_all_dependencies():
     assert result.index("B") < result.index("C")
     assert result.index("C") < result.index("D")
     assert result.index("B") < result.index("E")
+
+def test_average_clustering_triangle():
+    edges = [
+        ("A", "B"),
+        ("B", "C"),
+        ("C", "A"),
+    ]
+
+    assert compute_average_clustering(edges) == pytest.approx(1.0)
+
+
+def test_average_clustering_line_graph():
+    edges = [
+        ("A", "B"),
+        ("B", "C"),
+        ("C", "D"),
+    ]
+
+    assert compute_average_clustering(edges) == pytest.approx(0.0)
+
+
+def test_average_clustering_triangle_with_tail():
+    edges = [
+        ("A", "B"),
+        ("B", "C"),
+        ("A", "C"),
+        ("C", "D"),
+    ]
+
+    assert compute_average_clustering(edges) == pytest.approx(
+        0.5833333333333334
+    )
+
+
+def test_average_clustering_empty_edges():
+    assert compute_average_clustering([]) == 0.0
+
+
+def test_average_clustering_returns_float():
+    result = compute_average_clustering([("A", "B")])
+
+    assert isinstance(result, float)

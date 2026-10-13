@@ -33,7 +33,13 @@ def compute_topological_sort(directed_edges: list) -> list:
 
 def compute_average_clustering(edges: list) -> float:
     """Sub-task 5: Compute the average clustering coefficient of an undirected graph."""
-    pass
+    if not edges:
+        return 0.0
+
+    graph = nx.Graph()
+    graph.add_edges_from(edges)
+
+    return nx.average_clustering(graph)
 
 def main():
     print("Sub-task 1:", calculate_node_degrees([("A", "B"), ("B", "C"), ("B", "D")]))
